@@ -4,10 +4,11 @@ package sesac.spring.api.sesacapi.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import sesac.spring.api.sesacapi.dto.JoinDTO;
 import sesac.spring.api.sesacapi.dto.UserDTO;
-import vo.UserVO;
+import sesac.spring.api.sesacapi.vo.UserVO;
 
-import java.util.Date;
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -67,17 +68,17 @@ public class MainController {
         return "response";
     }
 //실습4
-//@PostMapping("introduce3")
-//public String introduce3(@RequestParam String name,@RequestParam String age, @RequestParam  String year, @RequestParam String interest,
-//                         @RequestParam  String month,  @RequestParam  String day, Model model){
-//    model.addAttribute("name", name);
-//    model.addAttribute("age", age);
-//    model.addAttribute("year", year);
-//    model.addAttribute("interest", interest);
-//    model.addAttribute("month", month);
-//    model.addAttribute("day", day);
-//    return "response";
-//}
+@PostMapping("/introduce3")
+public String introduce3(@RequestParam String name, @RequestParam  String gender,
+                         @RequestParam  String birth, @RequestParam String interest, Model model){
+    model.addAttribute("name", name);
+    model.addAttribute("gender", gender);
+    model.addAttribute("birth", birth);
+    model.addAttribute("interest", interest);
+    return "response";
+}
+
+
 ////DTO 수업
     @GetMapping("/dto/response1")
     @ResponseBody
@@ -99,21 +100,21 @@ public class MainController {
         String msg = userDTO.getName() + " " + userDTO.getAge() + "!!!" ;
         return msg;
     }
-    @GetMapping("/vo/response1")
+    @GetMapping("/sesac/spring/api/sesacapi/vo/response1")
     @ResponseBody
     public String voAPI1(UserVO uservo){
         String msg = uservo.getName() + " " + uservo.getAge() + "!!!" ;
         return msg;
     }
 
-    @PostMapping("/vo/response2")
+    @PostMapping("/sesac/spring/api/sesacapi/vo/response2")
     @ResponseBody
     public String voAPI2(UserVO uservo){
         String msg = uservo.getName() + " " + uservo.getAge() + "!!!" ;
         return msg;
     }
 
-    @PostMapping("/vo/response3")
+    @PostMapping("/sesac/spring/api/sesacapi/vo/response3")
     @ResponseBody
     public String voAPI3(@RequestBody UserVO uservo){
         String msg = uservo.getName() + " " + uservo.getAge() + "!!!" ;
@@ -187,12 +188,47 @@ public String axiosvoAPI1(@RequestParam(value="name") String name, @RequestParam
         String msg= "이름 : " + uservo.getName() + "\n나이 : " + uservo.getAge();
         return msg;
     }
+////동적폼전송 실습
+    @PostMapping("/axios/practice")
+    @ResponseBody
+    public String axiospractice(@RequestBody UserVO uservo) {
+        String msg= "이름 : " + uservo.getName() ;
+        return msg + "회원 가입 성공!";
+    }
+////CRUD 실습
+
+    //로그인
+    @GetMapping("/axios/user")
+    @ResponseBody
+    public String usr1(){
+        String msg =  "로그인 성공!!!";
+        return msg;
+    }
+
+    //회원가입
+    @PostMapping("/axios/user")
+    @ResponseBody
+    public String user2(@RequestBody JoinDTO joinDTO) {
+        String msg= "ID: " + joinDTO.getId() + "회원가입 성공!!";
+        return msg;
+    }
+
+    //정보 수정
+    @PatchMapping("/axios/user")
+    @ResponseBody
+    public String user3(@RequestBody JoinDTO joinDTO) {
+        String msg=  joinDTO.getId() + "회원 정보 수정!!";
+        return msg;
+    }
 
 
-
-
-
-
+    //회원 탈퇴
+    @DeleteMapping("/axios/user")
+    @ResponseBody
+    public String user4() {
+        String msg=  "회원 탈퇴 성공!!";
+        return msg;
+    }
 }
 
 

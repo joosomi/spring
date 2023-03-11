@@ -29,6 +29,8 @@
             /get/response4/이름/나이
         </a>
     </div>
+</div>
+<div>
     <hr>
     <div>
     <form action="/post/response1" method="post" style="margin-right: 20px;">
@@ -51,40 +53,36 @@
     </form>
     </div>
 </div>
-<!--&lt;!&ndash;실습&ndash;&gt; <div>-->
-<!--    <form action = "/introduce2" method="get" style="margin-right:20px;">-->
-<!--        <h3>Get 전송 (required = true) </h3>-->
-<!--        이름: <input type="text" name="name">-->
-<!--        나이 <input type="text" name="age">-->
-<!--        <button type="submit">  전송</button>-->
-<!--    </form>-->
-
-<!--    <form action = "/introduce3" method="post">-->
-<!--        <fieldset>-->
-<!--            이름: <input type="text" name="name">-->
-<!--            성별: <input type="radio" name="gender" id="male"> <label for="male">남자 </label>-->
-<!--            <input type="radio" name="gender" id="female"> <label for="female">여자</label>-->
-<!--            생년월일:-->
-<!--            <select name="year">년-->
-<!--                <OPTION value=1">1년</OPTION>-->
-<!--                <OPTION value="2">2년</OPTION>-->
-<!--            </select>-->
-<!--            <select name="month"> 월-->
-<!--                <OPTION value=1">1월</OPTION>-->
-<!--                <OPTION value="2">2월</OPTION>-->
-<!--            </select>-->
-<!--            <select name="day">일-->
-<!--                <OPTION value=1">1월</OPTION>-->
-<!--                <OPTION value="2">2월</OPTION>-->
-<!--            </select>-->
-<!--            관심사:-->
-<!--            <label><input type="checkbox" name="interest" value="travel"> 여행 </label>-->
-<!--            <label><input type="checkbox" name="interest" value="fashion"> 패션 </label>-->
-<!--            <label><input type="checkbox" name="interest" value="food"> 음식</label>-->
-<!--            <button type="submit"> 회원가입 </button>-->
-<!--        </fieldset>-->
-<!--    </form>-->
-
+<!--실습-->
+<div>
+    <form action = "/introduce2" method="get" style="margin-right:20px;">
+        <h3>Get 전송 (required = true) </h3>
+        이름: <input type="text" name="name">
+        나이 <input type="text" name="age">
+        <button type="submit">  전송</button>
+    </form>
+</div>
+<hr>
+<div>
+    <form action = "/introduce3" method="post" style="margin-right:20px;">
+        <fieldset>
+            <legend>회원가입</legend>
+            이름: <input type="text" name="name">
+            <br>
+            성별: <input type="radio" name="gender" id="male" value="male"> <label for="male">남자 </label>
+            <input type="radio" name="gender" id="female" value="female"> <label for="female">여자</label>
+            <br>
+            생년월일:
+            <input type="date" name="birth">
+            <br>
+            관심사:
+            <label>여행</label> <input type="checkbox" name="interest" value="travel">
+            <label>패션</label> <input type="checkbox" name="interest" value="fashion">
+            <label>음식</label> <input type="checkbox" name="interest" value="food">
+        </fieldset>
+        <button type="submit"> 회원가입 </button>
+    </form>
+</div>
 
 <!--////////////////////dto 수업-->
 <div>
@@ -274,6 +272,101 @@
         <button type="button" onclick="voResponse5();">Post ( VO ) - axios ( RequestBody O )</button>
     </form>
 </div>
+<!--///// 동적폼 전송 실습///-->
+<hr>
+<script>
+    function axiosPractice() {
+        var form = document.getElementById('form-practice');
+        axios.post(`/axios/practice`, {name: form.name.value, birth: form.birth.value, gender: form.gender.value,
+            interest: form.interest.value
+        })
+        .then((res)=>{
+            console.log( res );
+            console.log( res.data );
+        });
+    }
+
+</script>
+
+<div>
+    <form action = "/axios/practice" method="post" style="margin-right:20px;" id="form-practice">
+        <fieldset>
+            <legend>동적폼 전송</legend>
+            이름: <input type="text" name="name">
+            <br>
+            성별: <input type="radio" name="gender" id="man" value="male"> <label for="man">남자 </label>
+            <input type="radio" name="gender" id="woman" value="female"> <label for="woman">여자</label>
+            <br>
+            생년월일:
+            <input type="date" name="birth">
+            <br>
+            관심사:
+            <label>여행</label> <input type="checkbox" name="interest" value="travel">
+            <label>패션</label> <input type="checkbox" name="interest" value="fashion">
+            <label>음식</label> <input type="checkbox" name="interest" value="food">
+        </fieldset>
+        <button type="button" onclick="axiosPractice()"> 회원가입 </button>
+    </form>
+</div>
+
+
+
+
+////CRUD 실습////////
+<script>
+    function Register() {
+        var form = document.getElementById('form-user');
+        axios.post(`/axios/user`, {id: form.id.value, pw: form.pw.value, nickname: form.nickname.value})
+        .then((res)=>{
+            console.log( res );
+            console.log( res.data );
+        });
+    }
+        function Login() {
+        var form = document.getElementById('form-user');
+        axios.get(`/axios/user`, {id: form.id.value, pw: form.pw.value, nickname: form.nickname.value})
+        .then((res)=>{
+            console.log( res );
+            console.log( res.data );
+        });
+    }
+        function EditUser() {
+        var form = document.getElementById('form-user');
+        axios.patch(`/axios/user`, {id: form.id.value, pw: form.pw.value, nickname: form.nickname.value})
+        .then((res)=>{
+            console.log( res );
+            console.log( res.data );
+        });
+    }
+        function DeleteUser() {
+        var form = document.getElementById('form-user');
+         axios.delete(`/axios/user`, {id: form.id.value, pw: form.pw.value, nickname: form.nickname.value})
+        .then((res)=>{
+            console.log( res );
+            console.log( res.data );
+        });
+    }
+
+</script>
+
+<div>
+<form action = "/axios/user"  style="margin-right:20px;" id="form-user">
+    <fieldset>
+        <legend>회원관리 시스템</legend>
+        ID: <input type="text" name="id">
+        <br>
+        PW: <input type="text" name="pw">
+        <br>
+        Nickname: <input type="text" name="nickname">
+        <br>
+    </fieldset>
+    <button type="button" onclick="Register()"> 회원가입 </button>
+    <button type="button" onclick="Login()"> 로그인 </button>
+    <button type="button" onclick="EditUser()"> 정보수정 </button>
+    <button type="button" onclick="DeleteUser()"> 회원탈퇴 </button>
+</form>
+</div>
+
 
 </body>
 </html>

@@ -1,4 +1,4 @@
-package vo;
+package sesac.spring.api.sesacapi.vo;
 
 
 //vo => readonly -  set을 쓰면 안된다. get만 쓴다.
